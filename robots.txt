@@ -1,0 +1,6 @@
+User-agent: *
+Disallow:
+Disallow: /admin
+Disallow: /ficheros
+Crawl-delay: 120
+Sitemap: http://rimtu.com/sitemap.xml
