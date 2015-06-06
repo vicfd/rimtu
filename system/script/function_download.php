@@ -16,7 +16,7 @@
 			$datos[1] = str_replace(array(' ',','),'_',$datos[1]);
 			
 			$link = $datos[1] . $datos[2];
-			$id = '../../ficheros/' . $id;
+			$id = '../../uploads/' . $id;
 			
 			descargado($datos[0],$db);
 			recargarTiempo($dato[0],$db);

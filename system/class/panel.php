@@ -201,7 +201,7 @@
 														<a href="../system/script/function_download.php?id=<?php echo $archivo[2] ?>" style="color:#006699" title="Descargar Archivo">
 															<img src= "/system/style/download.png" width="25" height="25" border="0" align="middle" alt="" />
 														</a>														
-														<a href="javascript:void(0)" onclick="javascript:showFolder('<?php echo $archivo[3]; ?>')" style="color:#006699" title="Carpeta del Archivo">
+														<a href="javascript:void(0)" onclick="goMylove('#container','<?php echo $config[3] . 'folder.php?id=' . $archivo[3];?>','<?php echo '/folder/' . $archivo[3]; ?>')" style="color:#006699" title="Carpeta del Archivo">
 															<img src= "/system/style/folder.png" border="0" align="middle" alt="" />
 														</a>
 

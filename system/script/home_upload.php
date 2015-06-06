@@ -28,9 +28,9 @@
 		$extension = mb_strtolower(".".pathinfo($archivo, PATHINFO_EXTENSION));
 
 		if (is_img($extension))
-			$targetFile = '../../ficheros/' . $ftp . $extension;
+			$targetFile = '../../uploads/' . $ftp . $extension;
 		else
-			$targetFile = '../../ficheros/' . $ftp;
+			$targetFile = '../../uploads/' . $ftp;
 			
 		switch($data[0])	
 		{

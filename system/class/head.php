@@ -14,7 +14,7 @@
 						{
 							if(showrank($db->SelectDbArray($menu, $k, 4)))
 							{
-								if($db->SelectDbArray($menu, $k, 3) == 0)
+								if(empty($db->SelectDbArray($menu, $k, 3)))
 									echo
 									'
 										<a href="javascript:void(0)" onclick="'.$db->SelectDbArray($menu, $k, 2).'" class="Separador">
@@ -24,7 +24,7 @@
 								else
 									echo
 									'
-										<a href="'.$config[0].$db->SelectDbArray($menu, $k, 1).'" class="Separador">
+										<a href="'.$config[0].$db->SelectDbArray($menu, $k, 3).'" class="Separador">
 												'.$db->SelectDbArray($menu, $k, 0).'
 										</a>
 									';

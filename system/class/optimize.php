@@ -6,7 +6,7 @@
 	{
 		echo "<h1>Comprobar estado FTP</h1>";
 		
-		$dir = "../../ficheros/";
+		$dir = "../../uploads/";
 		$ach = scandir($dir);
 		$cnt = count($ach);
 		for($i=0;$i<$cnt;$i++)
@@ -37,9 +37,9 @@
 		{
 		
 		if (is_img(mysql_result($query, $i, 1))) 
-			$dir = '../../ficheros/'. mysql_result($query, $i, 0) . mysql_result($query, $i, 1);
+			$dir = '../../uploads/'. mysql_result($query, $i, 0) . mysql_result($query, $i, 1);
 		else
-			$dir = '../../ficheros/'. mysql_result($query, $i, 0);
+			$dir = '../../uploads/'. mysql_result($query, $i, 0);
 		
 			if(!file_exists($dir))
 			{

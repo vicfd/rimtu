@@ -64,7 +64,7 @@
 			else 
 			{
 				// Re-captcha
-				include_once 'recaptchalib.php';
+				include_once '../recaptchalib.php';
 				$privatekey = "6LdTEtsSAAAAAGACb-2W_Ztp0E5V3xeQ5IY0IWjC";
 				$resp = recaptcha_check_answer ($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
 
@@ -151,7 +151,7 @@
 					}
 					
 					// Comprobar rango de contraseña
-					if ($longitudpass <= 5 || $longitudpass >= 20) 
+					if ($longitudpass < 5 || $longitudpass > 20) 
 					{
 						$variabledetexto .= "La contraseña debe tener minimo cinco caracteres, y maximo veinte.<br />";
 						$comp = true;

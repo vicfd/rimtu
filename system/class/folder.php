@@ -94,13 +94,13 @@
 
 									if (is_img($dato[2])) 
 									{ 
-										$carpeta = '../../ficheros/'; $carpeta = $carpeta . $dato[3] . $dato[2];
+										$carpeta = '../../uploads/'; $carpeta = $carpeta . $dato[3] . $dato[2];
 										$imagen = true;
 										
 										if(empty($imagenes))
-											$imagenes .= $config[0] . "ficheros/" . $dato[3] . $dato[2];
+											$imagenes .= $config[0] . "uploads/" . $dato[3] . $dato[2];
 										else
-											$imagenes .= "\n" . $config[0] . "ficheros/" . $dato[3] . $dato[2];
+											$imagenes .= "\n" . $config[0] . "uploads/" . $dato[3] . $dato[2];
 											
 										$size = getimagesize($carpeta);
 										$anchura=$size[0];
@@ -176,7 +176,7 @@
 																if ($imagen == true) 
 																{
 															?>
-																<textarea cols="60" rows="1" style="margin-top: 5px" onclick="this.select(); pageTracker._trackEvent('new-done-click','alt-forum-link-click');" readonly="readonly"><?php imprimir($config[0] . "ficheros/" . $dato[3] . $dato[2]); ?></textarea>
+																<textarea cols="60" rows="1" style="margin-top: 5px" onclick="this.select(); pageTracker._trackEvent('new-done-click','alt-forum-link-click');" readonly="readonly"><?php imprimir($config[0] . "uploads/" . $dato[3] . $dato[2]); ?></textarea>
 															<?php
 																}
 															?>

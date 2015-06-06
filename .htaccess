@@ -14,10 +14,6 @@ php_value session.auto_start 1
 	
 	RewriteCond %{SCRIPT_FILENAME} !-d
 	RewriteCond %{SCRIPT_FILENAME} !-f
-	RewriteRule ^(\w+)/$ index.html?type=$1
-	
-	RewriteCond %{SCRIPT_FILENAME} !-d
-	RewriteCond %{SCRIPT_FILENAME} !-f
 	RewriteRule ^(\w+)/(\w+)$ index.html?type=$1&id=$2
 </ifModule>
 
