@@ -20,9 +20,9 @@
 				$archivo = $db->SelectDb("usuario,extension,size","archivos","WHERE ftp='".addslashes($_GET['id'])."'");
 				
 				if (is_img($archivo[1])) 
-					$dir = '../../ficheros/'. $_GET['id'] . $archivo[1];
+					$dir = '../../uploads/'. $_GET['id'] . $archivo[1];
 				else 
-					$dir = '../../ficheros/' . $_GET['id']; 
+					$dir = '../../uploads/' . $_GET['id']; 
 
 				$db->UpdateDb("usuarios","size = size-'$archivo[2]'","usuario = '".addslashes($_SESSION['usuario'])."'");
 				$db->DeleteDb("archivos","ftp='".addslashes($_GET['id'])."'");

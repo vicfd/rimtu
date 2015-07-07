@@ -17,6 +17,30 @@
 		});	
 	}
 	
+	function showFolder(id)	
+	{
+        $.ajax({
+                url:   '../system/class/folder.php?id='+id,
+                type:  'post',
+				beforeSend: function () 
+				{
+					$("#resultado").fadeIn(1000);	
+					$("#resultado").html("<img src='/system/style/load.gif'></img>");
+					$("#container").empty();
+				},
+                success:  function (response) 
+				{
+					$('#container').load('../system/class/folder.php?id='+id,function()
+					{
+						if(url != "" && url != null)
+							window.history.pushState(0, "Titulo", url);
+						$("#resultado").fadeOut(1000);
+					});	
+					$("#resultado").fadeOut(1000)
+                }
+        });
+	}
+	
 	function doMaintenance()	
 	{
         $.ajax({
