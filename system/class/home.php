@@ -73,8 +73,10 @@
 		if (canUpload($db))
 			echo
 			'
-				<input type="file" name="file_upload" id="file_upload" />
-				<div id="file_queue"></div>
+				<div style="margin-bottom: 200px">
+					<input type="file" name="file_upload" id="file_upload" />
+					<div id="file_queue"></div>
+				</div>
 			';
 		else
 		{
