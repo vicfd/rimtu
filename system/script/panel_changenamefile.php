@@ -14,7 +14,6 @@
 				$nombre = "Default";
 				
 			$db->UpdateDb("archivos","nombre = '$nombre'","id = '$id'");
-			redireccionar("panel/1");
 		}
 	}
 ?>

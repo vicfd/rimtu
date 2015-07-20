@@ -34,19 +34,15 @@
 					{
 						if(!empty($_GET['admin']))
 							redireccionar("./admin/index.html?id=1");
-						else if(empty($_GET['v']))
-							jsredireccionar("javascript:goMylove('#container','../system/class/panel.php?id=1&remove=1')");
 						else
-							jsredireccionar("javascript:goMylove('#container','../system/class/panel.php?id=".$_GET['v']."&remove=1')");
+							imprimir("Archivo eliminado correctamente");
 					}
 				}
 				else
-					jsredireccionar("javascript:goMylove('#container','../system/class/panel.php?id=1&remove=2')");
+					imprimir("Archivo eliminado de la base de datos");
 			}
 			else
-				jsredireccionar("javascript:goMylove('#container','../system/class/panel.php?id=1&remove=3')");
+				imprimir("El archivo no pudo ser eliminado");
 		}
-	} 
-	else 
-		jsredireccionar("goMylove('#container','../system/class/home.php','index.html')");
+	}
 ?>

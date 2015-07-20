@@ -40,7 +40,7 @@
 			{ 
 				$repetir = 1;
 				echo '
-					<div class="row" style="padding: 6px 10px 6px 10px">
+					<div class="rowPanel" style="padding: 6px 10px 6px 10px">
 						No tiene ningun reporte
 					</div>
 				';

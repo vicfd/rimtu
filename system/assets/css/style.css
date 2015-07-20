@@ -1,0 +1,299 @@
+	/* General */
+	
+		.Gradiente
+		{
+			border: 2px #ffffff outset;
+			background: #ffffff;
+			background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlOGU4ZTgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+			background: -moz-linear-gradient(top,  #ffffff 0%, #e8e8e8 100%);
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e8e8e8));
+			background: -webkit-linear-gradient(top,  #ffffff 0%,#e8e8e8 100%);
+			background: -o-linear-gradient(top,  #ffffff 0%,#e8e8e8 100%);
+			background: -ms-linear-gradient(top,  #ffffff 0%,#e8e8e8 100%);
+			background: linear-gradient(to bottom,  #ffffff 0%,#e8e8e8 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e8e8e8',GradientType=0 );
+		}
+		
+		.Blanco
+		{ 
+			background-color: #ffffff; 
+			box-shadow:0px 0 10px #979797; 
+		}
+	
+		.border-round 
+		{
+			-webkit-border-radius: 10px; /* Para Safari y Chrome */
+			-moz-border-radius: 10px; /* Para Firefox */
+			-khtml-border-radius:10px; /* Navegadores de Linux */
+			border-radius: 10px; /* CSS3 */
+		}	
+	
+	/* Fin General */
+	
+	/* Panel */
+	
+		.rowPanel:nth-child(odd)
+		{
+			background-color: #ffffff;
+		}
+	
+		.rowPanel:nth-child(even)
+		{
+			background-color: #e8e8e8;
+		}
+		
+		.rowPanel:hover
+		{
+			background-color: #f3f3cb;
+		}
+
+		.active, .desactive
+		{
+			float: left; 
+			width: 30px; 
+			height: 30px; 
+			padding: 5px 5px 5px 5px; 
+			margin:10px 10px 0px 0px; 
+			text-align: center;
+			color: #006699; 
+			-moz-box-shadow: 0px 0px 3px #838383; 
+			-webkit-box-shadow: 0px 0px 3px #838383; 
+			box-shadow: 0px 0px 3px #838383
+		}
+		
+		.desactive
+		{
+			background-color: #d2d1d1; 
+		}
+		
+		.active
+		{
+			background-color: #ebebeb;
+		}
+		
+		.active:hover
+		{
+			-moz-box-shadow: 0px 0px 5px #0a55a2;
+			-webkit-box-shadow: 0px 0px 5px #0a55a2;
+			box-shadow: 0px 0px 5px #0a55a2;
+		}
+		
+	/* Fin Panel */
+	
+	/* Anclas */
+
+		a
+		{
+			text-decoration: none;
+			color: #fff;
+		}
+		
+		a.admin
+		{
+			color: #00527b
+		}
+	
+	/* Fin Anclas */
+		
+	/* Upload.css */
+		
+		#file_queue 
+		{
+			/*background-color: #FFF;*/
+			filter:alpha(opacity=50); opacity:0.5;
+			border-radius: 3px;
+
+			height: 103px;
+			overflow: auto;
+			padding: 5px 10px;
+			width: auto;
+			color: #fff;
+		}
+
+		.uploadify 
+		{
+			position: relative;
+			margin-bottom: 1em;
+		}
+		 
+		.uploadify-button 
+		{
+			background-color: #505050;
+			background-image: linear-gradient(bottom, #505050 0%, #707070 100%);
+			background-image: -o-linear-gradient(bottom, #505050 0%, #707070 100%);
+			background-image: -moz-linear-gradient(bottom, #505050 0%, #707070 100%);
+			background-image: -webkit-linear-gradient(bottom, #505050 0%, #707070 100%);
+			background-image: -ms-linear-gradient(bottom, #505050 0%, #707070 100%);
+			background-image: -webkit-gradient
+			(
+				linear,
+				left bottom,
+				left top,
+				color-stop(0, #505050),
+				color-stop(1, #707070)
+			);
+			background-position: center top;
+			background-repeat: no-repeat;
+			-webkit-border-radius: 30px;
+			-moz-border-radius: 30px;
+			border-radius: 30px;
+			border: 2px solid #808080;
+			color: #FFF;
+			font: bold 12px Arial, Helvetica, sans-serif;
+			text-align: center;
+			text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+			width: auto;
+		}
+		
+		.uploadify:hover .uploadify-button 
+		{
+			background-color: #606060;
+			background-image: linear-gradient(top, #606060 0%, #808080 100%);
+			background-image: -o-linear-gradient(top, #606060 0%, #808080 100%);
+			background-image: -moz-linear-gradient(top, #606060 0%, #808080 100%);
+			background-image: -webkit-linear-gradient(top, #606060 0%, #808080 100%);
+			background-image: -ms-linear-gradient(top, #606060 0%, #808080 100%);
+			background-image: -webkit-gradient(
+				linear,
+				left bottom,
+				left top,
+				color-stop(0, #606060),
+				color-stop(1, #808080)
+			);
+			background-position: center bottom;
+		}
+		
+		.uploadify-button.disabled 
+		{
+			background-color: #D0D0D0;
+			color: #808080;
+		}
+		
+		.uploadify-queue 
+		{
+			margin-bottom: 1em;
+		}
+		
+		.uploadify-queue-item 
+		{
+			font: 11px Verdana, Geneva, sans-serif;
+			margin-top: 10px;
+			max-width: auto;
+		}
+		
+		.uploadify-error 
+		{
+			background-color: #FDE5DD !important;
+		}
+		
+		.uploadify-queue-item .cancel a 
+		{
+			background: url('/system/style/cancel.png') 0 0 no-repeat;
+			float: right;
+			height:	16px;
+			text-indent: -9999px;
+			width: 16px;
+		}
+		
+		.uploadify-queue-item.completed 
+		{
+			background-color: #E5E5E5;
+		}
+		
+		.uploadify-progress 
+		{
+			background-color: #ffffff;
+			margin-top: 10px;
+			width: auto;
+		}
+		
+		.uploadify-progress-bar 
+		{
+			height: 100px;
+			background-color: #0099FF;
+			height: 3px;
+			width: 1px;
+		}
+	
+	/* Barra Progreso */
+	
+		progress[value] 
+		{
+			/* Elimino la apariencia por defecto */
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			
+			/* Quito el borde que aparece en Firefox */
+			border: none;
+
+			/* Añado mis propios estilos */
+			width: 100%;
+			height: 40px;
+			
+			
+		/* 	Estos estilos solo se aplicaran al fondo de la barra en mozilla */
+			overflow:hidden;
+			border:1px inset #000;
+
+				background-color: #606060;
+				background-image: linear-gradient(top, #606060 0%, #808080 100%);
+				background-image: -o-linear-gradient(top, #606060 0%, #808080 100%);
+				background-image: -moz-linear-gradient(top, #606060 0%, #808080 100%);
+				background-image: -webkit-linear-gradient(top, #606060 0%, #808080 100%);
+				background-image: -ms-linear-gradient(top, #606060 0%, #808080 100%);
+				background-image: -webkit-gradient(
+					linear,
+					left bottom,
+					left top,
+					color-stop(0, #606060),
+					color-stop(1, #808080)
+				);
+			background-position: center bottom;
+			border: 2px solid #808080;
+			border-radius : 20px ; 
+			
+		}
+
+		.progress p
+		{
+			font-weight:bold;
+			color: #fff;
+		}
+
+		/* Compatibilidad de color en Firefox, Chrome y Safari */
+		progress::-moz-progress-bar
+		{
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffaf4b+0,ff920a+100;Orange+3D+%231 */
+			background: rgb(255,175,75); /* Old browsers */
+			background: -moz-linear-gradient(top, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,175,75,1)), color-stop(100%,rgba(255,146,10,1))); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top, rgba(255,175,75,1) 0%,rgba(255,146,10,1) 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top, rgba(255,175,75,1) 0%,rgba(255,146,10,1) 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top, rgba(255,175,75,1) 0%,rgba(255,146,10,1) 100%); /* IE10+ */
+			background: linear-gradient(to bottom, rgba(255,175,75,1) 0%,rgba(255,146,10,1) 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', endColorstr='#ff920a',GradientType=0 ); /* IE6-9 */
+		} 
+		
+		progress::-webkit-progress-value 
+		{ 
+			background: #FF8000;
+			background: rgba(255,175,75,1);
+			background: -moz-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
+			background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,175,75,1)), color-stop(100%, rgba(255,146,10,1)));
+			background: -webkit-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
+			background: -o-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
+			background: -ms-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
+			background: linear-gradient(to right, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', endColorstr='#ff920a', GradientType=1 );
+			border-radius : 20px ; 	
+		}
+		
+		progress::-webkit-progress-bar 
+		{ 
+			background-color:#D8D8D8;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+			border-radius : 20px ; 
+		}
+	
+	/* Fin Barra Progreso */

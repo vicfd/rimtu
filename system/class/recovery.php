@@ -3,13 +3,12 @@
 	
 	echo 
 	'
-		<div id="form_recovery" class="Blanco border-round" style="width: 635px; color: #006699; padding: 20px 0px 15px 0px; margin-bottom: 20px">
-			<form id="form_login" action="javascript:;" onsubmit="javascript:recovery($(\'#mail\').val())">
-				<input id="mail" type="text" value="Introduzca su correo para recuperar su cuenta" style="width:300px; margin-bottom: 30px" maxlength="50" />
-					<br />
-				<input type="submit" class="Boton grande azul" value="Recuperar Cuenta" />
-			</form>
-		</div>
-		<span id="recovery"></span>
+		<center>
+			<div id="form_recovery" class="Blanco border-round" style="width: 635px; color: #006699; padding: 20px 0px 15px 0px; margin-bottom: 20px">
+					<input id="mail" class="inputDefault" type="email" style="width:90%; margin-bottom:2%" maxlength="50" value="Introduzca su correo para recuperar su cuenta" />
+					<button class="btn btn-red" style="width:40%;" onclick="recovery($(\'#mail\').val())">Recuperar Cuenta</button>
+			</div>
+			<span id="recovery"></span>
+		</center>
 	';
 ?>

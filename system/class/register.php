@@ -2,60 +2,37 @@
 	include_once '../class.php';
 	
 	echo
-	'
+	'		
 		<script type="text/javascript">
 			Recaptcha.create("6LdTEtsSAAAAANHOxuUHBQl9doInxmFfBjDPOcxz", "recaptcha_div");
 		</script>
-		<div class="Blanco border-round" style="height: auto; width: 635px; color: #006699; padding: 20px 0px 15px 0px; margin-bottom: 20px">
-			<form id="form_register" action="javascript:;" onsubmit="javascript:register($(\'#username\').val(), $(\'#name\').val(), $(\'#password\').val(), $(\'#password2\').val(), $(\'#email\').val(), $(\'#recaptcha_challenge_field\').val(), $(\'#recaptcha_response_field\').val()),Recaptcha.reload()">
-				<table width="350" border="0" cellspacing="0" cellpadding="0">
-					<tr>
-						<td align="left">Usuario</td>
-						<td>
-							<div align="right">
-								<input id="username" type="text" value="" style="width:170px" maxlength="20" />
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td align="left">Nombre</td>
-						<td>
-							<div align="right">
-								<input id="name" type="text" value="" style="width:170px" maxlength="20" />
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td align="left">Contrase&ntilde;a</td>
-						<td>
-							<div align="right">
-								<input id="password" type="password" value="" style="width:170px" maxlength="20" />
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td align="left">Repetir contrase&ntilde;a</td>
-						<td>
-							<div align="right">
-								<input id="password2" type="password" value="" style="width:170px" maxlength="20" />
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td align="left">Email</td>
-						<td>
-							<div align="right">
-								<input id="email" type="text" value="" style="width:170px" maxlength="40" />
-							</div>
-						</td>
-					</tr>
-				</table>
-				<br /> 		
-					 <div id="recaptcha_div"></div>
-				<br />
-				<input type="submit" id="recaptcha_reload_btn" class="Boton grande azul" value="Registrar"/>
-			</form>
-		</div>
-		<span id="register"></span>
+		<center>
+			<div id="form_login" class="Blanco border-round" style="width: 635px; color: #006699; padding: 20px 0px 15px 0px; margin-bottom: 20px">
+					<div style="width: 80%; margin-bottom: 2%;">
+						<div style="width: 20%; text-align: left; display: inline-block;">Usuario</div>
+						<div style="width:75%; display: inline-block;"><input id="username" class="inputDefault" type="text" value="" style="width:90%;" maxlength="20" /></div>
+					</div>
+					<div style="width: 80%; margin-bottom: 2%;">
+						<div style="width: 20%; text-align: left; display: inline-block;">Nombre</div>
+						<div style="width:75%; display: inline-block;"><input id="name" class="inputDefault" type="text" value="" style="width:90%;" maxlength="20" /></div>
+					</div>
+					<div style="width: 80%; margin-bottom: 2%;">
+						<div style="width: 20%; text-align: left; display: inline-block;">Contrase&ntilde;a</div>
+						<div style="width:75%; display: inline-block;"><input id="password" class="inputDefault" type="password" value="" style="width:90%;" maxlength="20" /></div>
+					</div>
+					<div style="width: 80%; margin-bottom: 2%;">
+						<div style="width: 20%; text-align: left; display: inline-block;">Repetite</div>
+						<div style="width:75%; display: inline-block;"><input id="password2" class="inputDefault" type="password" value="" style="width:90%;" maxlength="20" /></div>
+					</div>
+					<div style="width: 80%; margin-bottom: 2%;">
+						<div style="width: 20%; text-align: left; display: inline-block;">Email</div>
+						<div style="width:75%; display: inline-block;"><input id="email" class="inputDefault" type="email" value="" style="width:90%;" maxlength="20" /></div>
+					</div>
+					<div id="recaptcha_div" style="margin-bottom:2%"></div>
+					<button class="btn btn-red" style="width:40%;" onclick="register($(\'#username\').val(), $(\'#name\').val(), $(\'#password\').val(), $(\'#password2\').val(), $(\'#email\').val(), $(\'#recaptcha_challenge_field\').val(), $(\'#recaptcha_response_field\').val()),Recaptcha.reload()">Registar</button>
+
+			</div>
+			<span id="register"></span>
+		</center>
 	';
 ?>

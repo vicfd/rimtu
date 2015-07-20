@@ -11,10 +11,11 @@
 				'formData' 			: {'carpeta' : codigo, 'usuario' : '<?php echo $_SESSION['usuario']; ?>'},
 				'fileSizeLimit' 	: '<?php echo $data[0]; ?>',
 				'fileTypeExts' 		: '<?php echo $data[1]; ?>',
+				'height'			: 40,
+				'width'				: 100,
 				'uploadLimit' 		: 100,
 				'removeTimeout' 	: 100,
-				'width' 			: 370,
-				'swf'              	: '/system/uploadify.swf',
+				'swf'              	: '/system/assets/php/uploadify.swf',
 				'uploader'			: '/system/script/home_upload.php',
 				'queueID'			: 'file_queue',	
 				'onUploadError' 	: function(file, errorCode, errorMsg, errorString) {alert('El archivo de nombre ' + file.name + ' no pudo ser subido: ' + errorString);},
@@ -27,30 +28,14 @@
 		{
 			echo
 			'
-				<div class="Gradiente" align="left" style="width: 325px; padding: 10px 10px 10px 10px">
-					No permitimos la subida de archivos por ahora, estamos de mantenimiento volvemos pronto.
+				<div id="banner">
+					<h2>En este momento nos encontramos en mantenimiento, volvemos lo antes posible</h2>
 				</div>
 			';
 			exit;
 		}
-
-		if (canUpload($db))
-			echo
-			'
-				<div class="Gradiente" align="left" style="height: 160px; width: 375px; padding: 10px 10px 10px 10px">
-					<input type="file" name="file_upload" id="file_upload" />
-					<div id="file_queue"></div>
-				</div>
-			';
-		else
-			echo
-			'
-				<div class="Gradiente" align="left" style="width: 375px; padding: 10px 10px 10px 10px">
-					Por hoy no tienes permitidos subir más informacion borra archivos o en el caso de ser un usuario anónimo create una cuenta
-				</div>
-			';
-
-		if (isVisitor()) 
+		
+		if (isVisitor() && canUpload($db)) 
 		{
 			$exist = $db->SelectDb("count(*)","anonimo","WHERE ip='".addslashes($_SERVER['REMOTE_ADDR'])."'");
 			
@@ -59,11 +44,11 @@
 				$data = $db->SelectDb("size","anonimo","WHERE ip='".addslashes($_SERVER['REMOTE_ADDR'])."'");
 				$space = $db->SelectDb("space","caracteristica","WHERE id=".addslashes($_SESSION['nivel']));
 				
-				$porcentaje = number_format((($data[0]*100)/$space[0]) * 2.6,2);
+				$porcentaje = number_format((($data[0]*100)/$space[0]),2);
 				$division = $data[0] / 1048576; 
 
-				if ($porcentaje > 260) 
-					$porcentaje = 260;
+				if ($porcentaje > 100) 
+					$porcentaje = 100;
 					
 				if ($division > 100) 
 				{
@@ -74,17 +59,31 @@
 					$tas = round($division, 2, PHP_ROUND_HALF_DOWN);
 				
 				echo '
-					<div class="Gradiente" style="margin-top: 10px; padding: 20px 10px 20px 10px; width: 290px" align="center">
-						<div id="barra2" class="barra_progreso">
-							<div class="barra_arriba" style="clip:rect(0px, '.$porcentaje.'px, auto, 0px);">
-								'.$tas.' mb de 100 mb		
-							</div>
-							<div class="barra_abajo">
-								'.$tas.' mb de 100 mb
-							</div>
-						</div>
-					</div>
+				<div class="progress">
+					<progress id="anonimo" style="width:100%" max="100" value=""></progress>
+					<p style="margin-top:-2%">'.$tas.' mb de 100 mb</p>
+				</div>
+				<script type="text/javascript"> 
+					animateprogress("#anonimo",'.$porcentaje.');
+				</script>
 				';
 			}
+		}
+
+		if (canUpload($db))
+			echo
+			'
+				<input type="file" name="file_upload" id="file_upload" />
+				<div id="file_queue"></div>
+			';
+		else
+		{
+			echo
+			'
+				<div id="banner">
+					<h2>No tienes permitido subir m&aacute;s im&aacute;genes, tienes todo tu espacio ocupado</h2>
+				</div>
+			';
+			exit;
 		}
 	?>

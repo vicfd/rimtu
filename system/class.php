@@ -10,7 +10,7 @@
 				$this -> SetDb();
 			}
 			
-			public function connect($server="localhost",$user="root",$password="1es2can3dalo")
+			public function connect($server="127.0.0.1",$user="root",$password="1es2can3dalo")
 			{
 				mysql_connect($server,$user,$password)or die ('Ha fallado la conexión con el servidor.');
 			}
@@ -82,9 +82,11 @@
 			function html_function($string)
 			{
 				echo '
-					<div class="Blanco border-round" style="width: 600px; padding: 20px 10px 20px 10px; color: #006699; text-align:center">
-						'.$string.'
-					</div>	
+					<center>
+						<div class="Blanco border-round" style="width: 600px; padding: 20px 10px 20px 10px; color: #006699; text-align:center">
+							'.$string.'
+						</div>
+					</center>					
 				';
 			}
 			

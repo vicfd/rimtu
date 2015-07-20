@@ -64,7 +64,7 @@
 			else 
 			{
 				// Re-captcha
-				include_once '../recaptchalib.php';
+				include_once '../assets/php/recaptchalib.php';
 				$privatekey = "6LdTEtsSAAAAAGACb-2W_Ztp0E5V3xeQ5IY0IWjC";
 				$resp = recaptcha_check_answer ($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
 

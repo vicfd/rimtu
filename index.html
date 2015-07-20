@@ -1,24 +1,35 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML>
+<!--
+	ZeroFour by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
 	<head>
 		<title>RIMTU - Sube tus imagenes - Upload your Image</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="keywords" content="RIMTU,Rimtu,rimtu,upload,imagenes,upload imagenes,herramienta,compartir,share,image,spain upload,gratis,gratis upload,descarga,download,descarga imagen,download image"/>
 		<meta name="description" content="RIMTU es un servicio de almacenamiento de imagenes donde podrás alojarlas de forma privada o compartirlas con tus amigos, RIMTU ofrece un gran ancho de banda y espacio de almacenamiento para tus archivos. Sube tus imagenes a RIMTU, sin&oacute;nimo de seguridad."/>
-		<link rel="shortcut icon" href="http://www.rimtu.com/system/style/favicon.ico" />
-		<link rel="stylesheet" href="http://www.rimtu.com/system/style/style.css" type="text/css" />
-		<link rel="stylesheet" type="text/css" href="http://www.rimtu.com/system/highslide/highslide.css" />
-		<script type="text/javascript" src="http://www.rimtu.com/system/md5-min.js"></script>
-		<script type="text/javascript" src="http://www.rimtu.com/system/jquery-1.10.2.min.js"></script>
-		<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.js"></script>
-		<script type="text/javascript" src="http://www.rimtu.com/system/jquery.uploadify-3.1.min.js"></script>
-		<script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
-		<!--[if lt IE 7]>
-		<link rel="stylesheet" type="text/css" href="http://www.rimtu.com/system/highslide/highslide-ie6.css" />
-		<![endif]-->
-		<script type="text/javascript" src="http://www.rimtu.com/system/highslide/highslide-full.js"></script>
-		<script type="text/javascript" src="http://www.rimtu.com/system/highslide/highslide.config.js"></script>
-		<script type="text/javascript" src="http://www.rimtu.com/system/class.js"></script>
+		<link rel="shortcut icon" href="../system/assets/images/favicon.ico" />
+		<!--[if lte IE 8]><script src="../system/assets/js/ie/html5shiv.js"></script><![endif]-->
+		<!--[if lte IE 8]><script src="../system/assets/js/ie/respond.min.js"></script><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="../system/assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="../system/assets/css/ie9.css" /><![endif]-->
+		<link rel="stylesheet" href="../system/assets/css/main.css" type="text/css" />
+		<link rel="stylesheet" href="../system/assets/css/style.css" type="text/css" />
+		<link rel="stylesheet" href="../system/assets/css/w2ui-1.4.3.css" type="text/css" />
+		<script type="text/javascript" src="../system/assets/js/jquery-2.0.3.js"></script>
+		<script type="text/javascript" src="../system/assets/js/jquery.uploadify-3.1.min.js"></script>
+		<script type="text/javascript" src="../system/assets/js/recaptcha_ajax.js"></script>
+		<script type="text/javascript" src="../system/assets/js/w2ui-1.4.2.js"></script>
+		<script type="text/javascript" src="../system/class.js"></script>
+		<script type="text/javascript" src="../system/assets/js/jquery.dropotron.min.js"></script>
+		<script type="text/javascript" src="../system/assets/js/skel.min.js"></script>
+		<script type="text/javascript" src="../system/assets/js/skel-viewport.min.js"></script>
+		<script type="text/javascript" src="../system/assets/js/util.js"></script>
+		<script type="text/javascript" src="../system/assets/js/main.js"></script>
+		
 		<?php
 			include_once 'system/class.php';
 			
@@ -38,43 +49,43 @@
 				{
 					case "admin":
 						$page = $config[3] . "admin.php?id=1";
-						$url = "/admin/";
+						$url = "/admin";
 						break;
 					case "optimize":
 						$page = $config[3] . "optimize.php";
-						$url = "/optimize/";
+						$url = "/optimize";
 						break;						
 					case "register":
 						$page = $config[3] . "register.php";
-						$url = "/register/";
+						$url = "/register";
 						break;
 					case "login":
 						$page = $config[3] . "login.php";
-						$url = "/login/";
+						$url = "/login";
 						break;
 					case "recovery":
 						$page = $config[3] . "recovery.php";
-						$url = "/recovery/";
+						$url = "/recovery";
 						break;
 					case "check":
 						$page = $config[4] . "function_check.php?id=" . $id;
-						$url = "/check/" . $id;
+						$url = "/check" . $id;
 						break;
 					case "panel":
 						$page = $config[3] . "panel.php?id=1";
-						$url = "/panel/";
+						$url = "/panel";
 						break;
 					case "folder":
 						$page = $config[3] . "folder.php?id=" . $id;
-						$url = "/folder/" . $id;
+						$url = "/folder" . $id;
 						break;
 					case "download":
 						$page = $config[3] . "download.php?id=" . $id;
-						$url = "/download/" . $id;
+						$url = "/download" . $id;
 						break;
 					case "terms":
 						$page = $config[3] . "terms.php";
-						$url = "/terms/";
+						$url = "/terms";
 						break;
 					default:
 						$page = $config[3] . "home.php";
@@ -83,10 +94,41 @@
 				}
 			}
 				
-		?>	
+		?>
 	</head>
-	<body onload="javascript:goMylove('#head','/system/class/head.php'),goMylove('#container','<?php echo $page;?>','<?php echo $url; ?>')">
-		<div id="head"></div>
-		<div id="container" align="center"></div>
+	<body class="homepage" onload="javascript:goMylove('#head','/system/class/head.php'),goMylove('#container','<?php echo $page;?>','<?php echo $url; ?>')">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header-wrapper">
+					<div class="container">
+						<header id="header">
+							<div class="inner">
+									<h1><a href="index.html" id="logo">Rimtu BETA</a></h1>
+									<div id="head"></div>
+							</div>
+						</header>
+						<br />
+						<div class="inner" style="margin-top: 2%">
+							<section class="container box feature1">
+								<div id="container"></div>
+							</section>
+						</div>
+					</div>
+				</div>
+			<div id="footer-wrapper">
+				<footer id="footer" class="container">
+					<div class="row">
+						<div class="12u">
+							<div id="copyright">
+								<ul class="menu">
+									<li>&copy; Rimtu. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</footer>
+			</div>
+		</div>
 	</body>
 </html>

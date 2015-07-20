@@ -3,31 +3,20 @@
 	
 	echo 
 	'
-		<div id="form_login" class="Blanco border-round" style="width: 635px; color: #006699; padding: 20px 0px 15px 0px; margin-bottom: 20px">
-			<form id="form_login" action="javascript:;" onsubmit="javascript:login($(\'#user\').val(), $(\'#pass\').val())">
-				<table width="350" border="0" cellspacing="0" cellpadding="0">
-					<tr>
-						<td align="left">Usuario</td>
-						<td>
-							<div align="right">
-								<input id="user" type="text" value="" style="width:170px" maxlength="20" />
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td align="left">Contrase&ntilde;a</td>
-						<td>
-							<div align="right">
-								<input id="pass" type="password" value="" style="width:170px" maxlength="20" />
-							</div>
-						</td>
-					</tr>
-				</table>
-					<br />
-				<input type="submit" class="Boton grande azul" value="Identificar" />
-				<a onclick="goMylove(\'#container\',\'/system/class/recovery.php\',\'/recovery/\')" class="Boton grande azul">Recuperar Cuenta</a>
-			</form>
-		</div>
-		<span id="login"></span>
+		<center>
+			<div id="form_login" class="Blanco border-round" style="width: 635px; color: #006699; padding: 20px 0px 15px 0px; margin-bottom: 20px">
+					<div style="width: 80%; margin-bottom: 2%;">
+						<div style="width: 20%; text-align: left; display: inline-block;">Usuario</div>
+						<div style="width:75%; display: inline-block;"><input id="user" class="inputDefault" type="text" value="" style="width:90%;" maxlength="20" /></div>
+					</div>
+					<div style="width: 80%; margin-bottom: 2%;">
+						<div style="width: 20%; text-align: left; display: inline-block;">Contrase&ntilde;a</div>
+						<div style="width:75%; display: inline-block;"><input id="pass" class="inputDefault" type="password" value="" style="width:90%;" maxlength="20" /></div>
+					</div>
+					<button class="btn btn-red" style="width:40%;" onclick="login($(\'#user\').val(), $(\'#pass\').val())">Identificar</button>
+					<button class="btn btn-red" style="width:40%;" onclick="goMylove(\'#container\',\'/system/class/recovery.php\',\'/recovery/\')">Recuperar Cuenta</button>
+			</div>
+			<span id="login"></span>
+		</center>
 	';
 ?>
