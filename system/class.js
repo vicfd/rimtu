@@ -414,15 +414,10 @@
                 data:  parametros,
                 url:   '../system/script/function_register.php',
                 type:  'post',
-				beforeSend: function () 
-				{
-					$("#resultado").fadeIn(1000);	
-					$("#resultado").html("<img src='/system/style/load.gif'></img>");
-				},
                 success:  function (response) 
 				{
 					$("#register").html(response);
-					$("#resultado").fadeOut(1000);
+					Recaptcha.reload()
                 }
         });
 	}
