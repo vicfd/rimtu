@@ -224,7 +224,7 @@
 			
 			function recargarTiempo($id,$db)
 			{
-				$db->UpdateDb("archivos","expira = UNIX_TIMESTAMP()+2592000","id='$id' and expira <= UNIX_TIMESTAMP()+2592000");	
+				$db->UpdateDb("archivos","expira = ". date('Y-m-d h:i:s', $m=strtotime('+1 month')),"id='$id'");	
 			}
 
 		/* Final funciones en general */

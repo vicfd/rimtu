@@ -54,7 +54,7 @@
 					$db->UpdateDb("anonimo","size=size+".addslashes($_FILES['Filedata']['size']),"ip='".addslashes($_SERVER['REMOTE_ADDR'])."'");
 			}
 			$db->UpdateDb("usuarios","size=size+".addslashes($_FILES['Filedata']['size']),"usuario='".addslashes($usuario)."'");
-			$db->InsertDb("archivos","nombre, extension, size, ftp, carpeta, numero, ip, usuario, nivel, subido, expira","'$nombre','$extension','".$_FILES['Filedata']['size']."','$ftp','$carpeta','$numero[0]','".$_SERVER['REMOTE_ADDR']."','$usuario','$data[0]','".time()."','".(time()+31104000)."'");	
+			$db->InsertDb("archivos","nombre, extension, size, ftp, carpeta, numero, ip, usuario, nivel, subido, expira","'$nombre','$extension','".$_FILES['Filedata']['size']."','$ftp','$carpeta','$numero[0]','".$_SERVER['REMOTE_ADDR']."','$usuario','$data[0]','".addslashes(date("Y-m-d h:i:s"))."','".(date("Y-m-d h:i:s", $m=strtotime('+1 month')))."'");	
 		}
 	}
 ?>
