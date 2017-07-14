@@ -1,144 +1,38 @@
 <?php
-	/* PhP */
-		/* Class */
-		
-		class DataBase
+	include_once 'config.php';
+	
+	/* HTML */
+			
+		function redireccionar($link,$time = 0)
 		{
-			public function DataBase()
-			{
-				$this -> connect();
-				$this -> SetDb();
-			}
-			
-			public function connect($server="127.0.0.1",$user="root",$password="1es2can3dalo")
-			{
-				mysql_connect($server,$user,$password)or die ('Ha fallado la conexión con el servidor.');
-			}
-			
-			public function SetDb($db="Upload")
-			{
-				mysql_select_db($db)or die ('Error al seleccionar la Base de Datos.');
-			}
-			
-			public function SelectDb($select,$table,$clause = "")
-			{
-				return mysql_fetch_row(mysql_query("SELECT ".$select." FROM ".$table." ".$clause));		
-			}
-			
-			public function SelectDbArray($query,$position,$slot)
-			{
-				return mysql_result($query,$position,$slot);
-			}
-			
-			public function QueryDb($select = "*",$table,$clause = "")
-			{
-				return mysql_query("SELECT ".$select." FROM ".$table." ".$clause);
-			}
-			
-			public function InsertDb($table,$into,$value)
-			{
-				mysql_query("INSERT INTO ".$table."(".$into.")VALUES(".$value.")");
-			}
-			
-			public function UpdateDb($table,$value,$clause)
-			{
-				mysql_query("UPDATE ".$table." SET ".$value." WHERE ".$clause);
-			}
-			
-			public function DeleteDb($table,$clause)
-			{
-				mysql_query("DELETE FROM ".$table." WHERE ".$clause);
-			}
+			echo 
+			'
+				<script type="text/javascript">
+					function redireccionar()
+					{
+						window.location="'.$link.'";
+					}
+					setTimeout("redireccionar()", '.$time.');
+				</script>
+			';
 		}
-		
-		/* HTML */
-			
-
-			
-			function redireccionar($link,$time = 0)
-			{
-				echo 
-				'
-					<script type="text/javascript">
-						function redireccionar()
-						{
-							window.location="'.$link.'";
-						}
-						setTimeout("redireccionar()", '.$time.');
-					</script>
-				';
-			}
-			
-			function jsredireccionar($link,$time=0)
-			{
-				echo 
-				'
-					<script type="text/javascript">
-						setTimeout("'.$link.'", '.$time.');
-					</script>
-				';
-			}
-			
-			function html_function($string)
-			{
-				echo '
-					<center>
-						<div class="Blanco border-round" style="width: 600px; padding: 20px 10px 20px 10px; color: #006699; text-align:center">
-							'.$string.'
-						</div>
-					</center>					
-				';
-			}
 			
 		/* Fin HTML */
 	
 		/* Inicio funciones en general */
-		
-			function isVisitor()
+			
+			function showrank($rank, $user_level)
 			{
-				if($_SESSION['nivel'] == 0)
-					return true;
-				return false;
-			}
-		
-			function isUser()
-			{
-				if($_SESSION['nivel'] > 0)
-					return true;
-				return false;
+				$access = false;
+				if($user_level == 0 && $rank == 0 || ($rank > 0 && $user_level >= $rank))
+					$access = true;
+				return $access;	
 			}
 			
-			function isAdmin()
+			function canUpload($db, $user_id, $space)
 			{
-				if($_SESSION['nivel'] >= 3)
-					return true;
-				return false;
-			}
-			
-			function showrank($rank)
-			{
-				if($rank == 0 && isVisitor())
-					return true;
-				else if($rank == 1 && isUser())
-					return true;
-				else if($rank == 2)
-					return true;
-				else if($rank == 3 && isAdmin())
-					return true;
-				return false;	
-			}
-			
-			function canUpload($db)
-			{
-				$space = $db->SelectDb("space","caracteristica","WHERE id=".addslashes($_SESSION['nivel']));
-				if(isVisitor())
-					$data = $db->SelectDb("size","anonimo","WHERE ip='".addslashes($_SERVER['REMOTE_ADDR'])."'");
-				else
-					$data = $db->SelectDb("size","usuarios","WHERE usuario='".addslashes($_SESSION['usuario'])."'");
-				
-				if($data[0] < $space[0])
-					return true;
-				return false;
+				$data = $db->query("SELECT client_file_size_upload FROM clients WHERE client_id=".$user_id)->fetch_row();
+				return $data[0] < $space;
 			}
 			
 			function generar_md5($user,$email)
@@ -148,10 +42,10 @@
 			
 			function comprimirnombre($nombre)
 			{
-				if (strlen($nombre) <= 22) 
-					imprimir($nombre); 
+				if (strlen($nombre) <= 40) 
+					return $nombre; 
 				else
-					imprimir(substr($nombre,0,21).'...');
+					return substr($nombre,0,39).'...';
 			}
 			
 			function emailvalido($email) 
@@ -192,19 +86,14 @@
 			
 			function is_img($str)
 			{
-				if(in_array($str, array('.jpg','.jpeg','.gif','.png','.bmp'))) 
+				if(in_array($str, array('jpg','jpeg','gif','png','bmp'))) 
 					return true; 
 				return false;
-			}
-			
-			function replaceStr($old,$new,$str)
-			{
-				return str_replace($old,$new,$str);
-			}			
+			}		
 
-			function injection($variable)
+			function injection($db, $variable)
 			{
-				return str_replace(array("<",">","[","]","*","^","'",'"'),"", mysql_real_escape_string($variable));
+				return str_replace(array("<",">","[","]","*","^","'",'"'),"",mysqli_real_escape_string($db, $variable));
 			}
 			
 			function imprimir($echo)
@@ -212,31 +101,39 @@
 				echo $echo;
 			}
 			
-			function visto($id,$db)
+			function file_view($db, $file_id)
 			{
-				$db->UpdateDb("archivos","visto=visto+1","id='".addslashes($id)."'");
+				$db->query("UPDATE files SET file_view=file_view+1 WHERE file_id=$file_id");
 			}
 			
-			function descargado($id,$db)
+			function file_downloaded($db, $file_id)
 			{
-				$db->UpdateDb("archivos","descargado=descargado+1","id='$id'");
+				$db->query("UPDATE files SET file_download=file_download+1 WHERE file_id=$file_id");
 			}
 			
-			function recargarTiempo($id,$db)
+			function file_date_renew($db, $file_id)
 			{
-				$db->UpdateDb("archivos","expira = ". date('Y-m-d h:i:s', $m=strtotime('+1 month')),"id='$id'");	
+				$db->query("UPDATE files SET expira=".date('Y-m-d h:i:s', strtotime('+1 month'))." WHERE file_id=$file_id");
+			}
+			
+			function sendemail($sendemail, $email, $subject, $body)
+			{
+				$headers = "From: " . $email . "\n";
+				$headers .= "MIME-Version: 1.0\n"; 
+				$headers .= "Content-type: text/html; charset=utf-8\n";	
+				mail($sendemail,$subject,$body,$headers);
 			}
 
 		/* Final funciones en general */
 		
 		/* Inicio */
-		$db = new DataBase();
-		$config = $db->SelectDb("*","config");
-		if(empty($_SESSION['nivel']))
+		
+		session_start();
+		$db = new mysqli("localhost", "upload", "123456", "upload");
+		
+		if(empty($_SESSION['client_id']))
 		{
-			$_SESSION['usuario'] = "anonimo";
-			$_SESSION['nivel'] = 0;
+			$_SESSION['client_id'] = 0;
+			$_SESSION['client_level'] = 0;
 		}
-		/* Final Programa */
-	
 ?>

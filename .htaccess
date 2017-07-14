@@ -1,6 +1,5 @@
 AddDefaultCharset ISO-8859-15
 AddType application/x-httpd-php .htm .html
-php_value session.auto_start 1
 
 <ifModule mod_rewrite.c>
 	RewriteEngine On

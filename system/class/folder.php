@@ -1,142 +1,132 @@
+<center>
 	<?php
-		include_once '../class.php';
-		include_once '../language/esES.php';
-		
-		$id = $_GET['id'];
-		$id = injection($id);
-
-		if (!empty($_GET['id'])) 
+		if (empty($_GET['id'])) 
 		{
-			$id = injection($_GET['id']);
-			$check = $db->SelectDb("max(numero),COUNT(*)","archivos","WHERE carpeta='".addslashes($id)."'");
+			echo "<p class='alert alert-danger'>La carpeta introducida no existe.</p>";
+			exit;
+		}
+		
+		$id = injection($db, $_GET['id']);
+		$folder = $db->query("SELECT file_id, file_name, file_extension, file_ftp, file_view, file_download FROM files WHERE file_folder_id='$id' && file_active=1 ORDER BY file_id");
+		$row_cnt = $folder->num_rows;
 			
-			if($check[1] > 0)
-			{	
-				$links = "";
-				$imagenes = "";
-				$contador = 0;
-				
-				for ($k=0; $k <= $check[0]; $k++) 
-				{
-						
-						$dato = $db->SelectDb("id,nombre,extension,ftp,visto,descargado","archivos","WHERE carpeta='".addslashes($id)."' AND numero=".addslashes($k)."");
-						
-						if(!empty($dato[0]))
-						{
-							visto($dato[0],$db);
-							recargarTiempo($dato[0],$db);
-							$carpeta = "../system/style/images/default.jpg";
-							$links .=  $config[0] . "download/" . $dato[3] . "\n";
-							if (is_img($dato[2])) 
-							{ 
-								$carpeta = '../../uploads/' . $dato[3] . $dato[2];
-								$imagenes .= $config[0] . "uploads/" . $dato[3] . $dato[2] . "\n";
-							}
-							?>	
-							
-							
-							<div class="Blanco border-round" style="height: 300px; width: 23%; margin-bottom: 1%; margin-left: 1%; padding: 1%; display: inline-table;">
-								<center>
-									<img onclick="$('#popup<?php echo $contador; ?>').w2popup()" class="border-round" style="width: 250px; height: 188px;" src= "<?php imprimir("./$carpeta"); ?>" border="0" alt="" />
-									<a href="../system/script/function_download.php?id=<?php imprimir($dato[3]); ?>">
-										<img src= "<?php imprimir($config[5]); ?>descarga.png" width="78" height="78" border="0" align="middle" alt="" />
-									</a>
-								</center>
-							</div>
-							
-							<div id="popup<?php echo $contador; ?>" style="display: none; width: 30%; height: 40%; overflow: hidden">
-								<div rel="title">
-									Nombre del Archivo: <?php comprimirnombre($dato[1]); ?>
-								</div>
-								<div rel="body" style="padding-top: 5%; line-height: 150%">
-									<?php
-										if($contador != 0)
-										{
-											echo
-											"
-												<div style=\"position:absolute; top: 50px; left: 10px;\">
-													<img onclick=\"$('#popup" . ($contador-1) . "').w2popup()\" src= \"".$config[5]."last.png\" border=\"0\" alt=\"\" />
-												</div>
-											";
-										}
-
-										if($contador != $check[1]-1)
-										{
-											echo
-											"
-												<div style=\"position:absolute; top: 50px; right: 10px;\">
-													<img onclick=\"$('#popup" . ($contador+1) . "').w2popup()\" src= \"".$config[5]."next.png\" border=\"0\" alt=\"\" />
-												</div>
-											";
-										}
-									
-										echo
-										"
-										<center>
-											<a href=\"/$carpeta\">
-												<img class=\"border-round\" style=\"max-width: 250px; max-height: 188px;\" src=\"/$carpeta\" border=\"0\" alt=\"\" />
-											</a>
-										
-										
-										<p>Visto: <b>$dato[4]</b> Descargado <b>$dato[5]</b></p>
-
-										
-											<textarea cols=\"60\" rows=\"1\" onclick=\"this.select(); pageTracker._trackEvent('new-done-click','alt-forum-link-click');\" readonly=\"readonly\">" . $config[0] . "download/" . $dato[3] . "</textarea>
-										";
-										
-										if (is_img($dato[2])) 
-										{
-											echo
-											"
-												<textarea cols=\"60\" rows=\"1\" style=\"margin-top: 5px\" onclick=\"this.select(); pageTracker._trackEvent('new-done-click','alt-forum-link-click');\" readonly=\"readonly\">" . $config[0] . "uploads/" . $dato[3] . $dato[2] . "</textarea>
-											";
-										}
-										echo "</center></div></div>";
-							$contador++;
-						}
-				}
-			?>
-			
-			<div>
-				<img style="margin-top: 2%;" onclick="$('#popupLinks').w2popup()" src= "<?php imprimir($config[5]); ?>link.png" border="0" alt="" />
+		if($row_cnt == 0)
+		{
+			echo "<p class='alert alert-danger'>La carpeta introducida no existe.</p>";
+			exit;
+		}
+		
+		echo 
+		"
+			<div class='input-group'>
+				<span class='input-group-addon' id='basic-addon1'>Carpeta</span>
+				<input type='text' class='form-control' value='".$domain."folder/".$id."' aria-describedby='basic-addon1'>
 			</div>
-			
-				<div id="popupLinks" style="display: none; width: 30%; height: 45%; overflow: hidden">
-					<div rel="title">
-						Enlaces de los archivos
-					</div>
-					<div rel="body" style="padding-top: 5%; line-height: 150%">
-						<center>
-							<div style="margin:0px 0px 15px 0px">
-								<p>Carpeta</p>
-								<textarea cols="60" rows="1" onclick="this.select(); pageTracker._trackEvent('new-done-click','alt-forum-link-click');" readonly="readonly"><?php imprimir($config[0] . "folder/" . $id); ?></textarea>
-							</div>	
 
-
-							<div style="padding: 20px 0px 0px 0px; margin:0px 0px 15px 0px">
-								<p>Enlaces</p>
-								<textarea cols="60" rows="1" onclick="this.select(); pageTracker._trackEvent('new-done-click','alt-forum-link-click');" readonly="readonly"><?php imprimir($links); ?></textarea>
-							</div>
-
-							<?php 		
-								if (!empty($imagenes)) 
-								{
-							?>
-									<div style="padding: 20px 0px 0px 0px; margin:0px 0px 15px 0px">
-										<p>Im&aacute;genes</p>
-										<textarea cols="60" rows="1" style="max-height: 100px;" onclick="this.select(); pageTracker._trackEvent('new-done-click','alt-forum-link-click');" readonly="readonly"><?php print($imagenes); ?></textarea>
-									</div>
-							<?php 
-								} 
-							?>
-						</center>
-					</div>
-					<div rel="buttons">
-						<button class="btn" onclick="w2popup.close(), goMylove('#container','<?php echo $config[3] . "home.php"; ?>','<?php echo "/index.html"; ?>')"><?php imprimir($carpeta_1); ?></button>
-					</div>
+			<br />
+		
+			<div class='btn-group btn-group-justified' role='group'>
+				<div class='btn-group' role='group'>
+					<button id='copyWeb' type='button' class='btn btn-default'>Enlaces web</button>
 				</div>
-				<?php
-					
+				<div class='btn-group' role='group'>
+					<button id='copyEnlaces' type='button' class='btn btn-default'>Enlaces directos</button>
+				</div>
+			</div>			
+			<span id='copyAnswer'></span>
+			
+			<br />
+			
+			<div id='alert' style='display: none'></div>
+		";
+		
+		$linksWeb = "";
+		$linksDirect = "";
+		
+		while($row = $folder->fetch_row())
+		{
+			if(!empty($row[0]))
+			{
+				file_view($db, $row[0]);
+				file_date_renew($db, $row[0]);
+				
+				$image = '../../uploads/' . $row[3] . '.' . $row[2];
+				$linksWeb .=  $domain . "download/" . $row[3] . "\n";
+				$linksDirect .= $domain . "uploads/" . $row[3] . '.' . $row[2] . "\n";
+				
+				echo
+				"
+					<div class='panel panel-default'>
+						<div class='panel-body'>
+							<img class='img-responsive' style='width: 30%' src='./$image' border='0' alt='' />
+								<br />
+							<a href='../system/script/function_download.php?id=$row[3]'><img src='".$images_dir."descarga.png"."' border='0' align='middle' alt='' /></a>
+							<a href='/report/".$row[0]."'><img src='".$images_dir."reporte.png"."' border='0' align='middle' alt='' /></a>
+							<p>Visto: <b>$row[4]</b> Descargado <b>$row[5]</b></p>
+							
+							<div class='input-group'>
+								<span class='input-group-addon' id='basic-addon1'>Nombre</span>
+								<input type='text' class='form-control' value='".$row[1]."' aria-describedby='basic-addon1'>
+							</div>	
+							<br />
+							<div class='input-group'>
+								<span class='input-group-addon' id='basic-addon1'>Enlace web</span>
+								<input type='text' class='form-control' value='".$domain."download/".$row[3]."' aria-describedby='basic-addon1'>
+							</div>					
+							<br />
+							<div class='input-group'>
+								<span class='input-group-addon' id='basic-addon1'>Enlace imágen</span>
+								<input type='text' class='form-control' value='" . $domain . "uploads/" . $row[3] . "." . $row[2] . "' aria-describedby='basic-addon1'>
+							</div>
+						</div>
+					</div>
+				";
 			}
 		}
+
+		echo
+		"
+			<textarea id='enlacesWeb' style='display: none'>".$linksWeb."</textarea>
+			<textarea id='enlacesDirectos' style='display: none'>".$linksDirect."</textarea>
+		";
 	?>
+</center>
+
+<script language="JavaScript">
+	function copyToCliboard(txt) 
+	{
+		if (document.queryCommandSupported && document.queryCommandSupported("copy")) 
+		{
+			var textarea = document.createElement("textarea");
+			textarea.textContent = txt;
+			document.body.appendChild(textarea);
+			textarea.select();
+			
+			try 
+			{
+				$("#alert").removeClass();
+				$("#alert").addClass('alert alert-success');
+				document.getElementById("alert").removeAttribute("style");
+				document.getElementById("alert").innerHTML = 'Copiado con exito';
+				setTimeout(function () {document.getElementById("alert").style.display = "none";}, 2000);
+				return document.execCommand("copy");
+			} 
+			catch (ex)
+			{
+				$("#alert").removeClass();
+				$("#alert").addClass('alert alert-danger');
+				document.getElementById("alert").removeAttribute("style");
+				document.getElementById("alert").innerHTML = 'Error al copiar';
+				setTimeout(function () {document.getElementById("alert").style.display = "none";}, 2000);
+				return false;
+			} 
+			finally 
+			{
+				document.body.removeChild(textarea);
+			}
+		}
+	}
+
+	document.getElementById('copyWeb').addEventListener('click', function(){copyToCliboard(document.getElementById('enlacesWeb').innerHTML);});
+	document.getElementById('copyEnlaces').addEventListener('click', function(){copyToCliboard(document.getElementById('enlacesDirectos').innerHTML);});
+</script>

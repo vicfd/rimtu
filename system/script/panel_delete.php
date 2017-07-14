@@ -1,48 +1,21 @@
 <?php
 	include_once '../class.php';
 
-	if (!empty($_GET['id'])) 
+	if (isset($_POST['file_id'])) 
 	{
-		if(!empty($_GET['sql']))
+		$file_id = injection($db, !get_magic_quotes_gpc() ? addslashes($_POST['file_id']) : $_POST['file_id']);
+		$file = $db->query("SELECT client_id, file_ftp, file_extension, file_size FROM files WHERE file_id='$file_id'")->fetch_row();
+			
+		if ($_SESSION['client_id'] == $file[0] && is_file('../../uploads/'. $file[1] . '.' . $file[2]))
 		{
-			if($_SESSION['nivel'] == 3)
-			{
-				$db->DeleteDb("reporte","id='".addslashes($_GET['sql'])."'");
-				redireccionar("./admin/index.html?id=1");
-			}
+			$db->query("UPDATE clients SET client_file_size_upload=client_file_size_upload-$file[3] WHERE client_id='$file[0]'");
+			$db->query("UPDATE files SET file_active='false' WHERE file_id='$file_id'");
+			
+			if($db->query("SELECT * FROM files_report WHERE file_id='$file_id' && report_active=1")->num_rows == 0)
+				unlink('../../uploads/'. $file[1] . '.' . $file[2]);
+			echo 0;
 		}
 		else
-		{
-			$exist = $db->SelectDb("count(*)","archivos","WHERE ftp='".addslashes($_GET['id'])."'");
-			
-			if($exist[0] > 0)
-			{
-				$archivo = $db->SelectDb("usuario,extension,size","archivos","WHERE ftp='".addslashes($_GET['id'])."'");
-				
-				if (is_img($archivo[1])) 
-					$dir = '../../uploads/'. $_GET['id'] . $archivo[1];
-				else 
-					$dir = '../../uploads/' . $_GET['id']; 
-
-				$db->UpdateDb("usuarios","size = size-'$archivo[2]'","usuario = '".addslashes($_SESSION['usuario'])."'");
-				$db->DeleteDb("archivos","ftp='".addslashes($_GET['id'])."'");
-				$db->DeleteDb("reporte","archivo='".addslashes($_GET['id'])."'");
-				
-				if(file_exists($dir) && ($_SESSION['usuario'] == $archivo[0] || $_SESSION['nivel'] == 3))
-				{
-					if(unlink($dir)) 
-					{
-						if(!empty($_GET['admin']))
-							redireccionar("./admin/index.html?id=1");
-						else
-							imprimir("Archivo eliminado correctamente");
-					}
-				}
-				else
-					imprimir("Archivo eliminado de la base de datos");
-			}
-			else
-				imprimir("El archivo no pudo ser eliminado");
-		}
+			echo 1;
 	}
 ?>

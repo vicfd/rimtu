@@ -1,83 +1,57 @@
 	<?php
-		include_once '../class.php';
-		$data = $db->SelectDb("size,extension","caracteristica","WHERE id=".addslashes($_SESSION['nivel']));
+		$data = $db->query("SELECT client_type_size, client_type_space, client_type_extension FROM clients_type WHERE client_type_level=".addslashes($_SESSION['client_level']))->fetch_row();
 	?>
 	<script type="text/javascript">
-		var codigo = hex_md5((Math.round(Math.random()*1000),((new Date()).getTime() / 1000)).toString()).substring(0, 20);
+		var folder_id = hex_md5((Math.round(Math.random()*1000),((new Date()).getTime() / 1000)).toString()).substring(0, 199);
 		$(function() {
-			$("#file_upload").uploadify({
-				'auto'     			: true,
-				'buttonText' 		: 'SUBIR ARCHIVOS',
-				'formData' 			: {'carpeta' : codigo, 'usuario' : '<?php echo $_SESSION['usuario']; ?>'},
-				'fileSizeLimit' 	: '<?php echo $data[0]; ?>',
-				'fileTypeExts' 		: '<?php echo $data[1]; ?>',
-				'height'			: 40,
-				'width'				: 100,
-				'uploadLimit' 		: 100,
-				'removeTimeout' 	: 100,
-				'swf'              	: '/system/assets/php/uploadify.swf',
-				'uploader'			: '/system/script/home_upload.php',
-				'queueID'			: 'file_queue',	
+			$('#file_upload').uploadifive({
+				'auto'     			: false,
+				'formData' 			: {'folder_id' : folder_id},
+				'fileSizeLimit' 	: '200MB',
+				'fileType' 			: 'image/*',
+				'buttonText'   		: 'Elegir archivos',
+				'buttonClass'		: 'btn btn-primary',
+				'queueSizeLimit' 	: 20,
+				'removeCompleted' 	: true,
+				'multi'        		: true,
+				'uploadScript'		: '/system/script/function_upload.php',
+				'queueID'			: 'queue',
+				'onAddQueueItem' 	: function(file){
+					var file_extension = file.name.substring(file.name.lastIndexOf('.') + 1);
+					var extensions = ['jpg', 'jpeg', 'gif', 'png', 'bmp'];
+					if(!extensions.includes(file_extension.toLowerCase()))
+					{
+						alert("Solo se permite subir imagenes");
+						$('#file_upload').uploadifive('cancel', file);
+					}
+				},				
 				'onUploadError' 	: function(file, errorCode, errorMsg, errorString) {alert('El archivo de nombre ' + file.name + ' no pudo ser subido: ' + errorString);},
-				'onQueueComplete'  	: function() {setTimeout ("goMylove('#container','../system/class/folder.php?id='+codigo,'/folder/'+codigo)", 1000);}
+				'onUploadComplete' 	: function(file, data) {redireccionar('./folder/'+folder_id, 0);}
 			});
 		});
 	</script>	
 	<?php
-		if($config[2] == 1)
+		if($maintenance == 1)
 		{
-			echo
-			'
-				<div id="banner">
-					<h2>En este momento nos encontramos en mantenimiento, volvemos lo antes posible</h2>
-				</div>
-			';
+
+			echo "<p class='alert alert-danger'>En este momento nos encontramos en mantenimiento, volvemos lo antes posible</p>";
 			exit;
 		}
-		
-		if (isVisitor() && canUpload($db)) 
+
+		if (canUpload($db, $_SESSION['client_id'], $data[1]))
 		{
-			$exist = $db->SelectDb("count(*)","anonimo","WHERE ip='".addslashes($_SERVER['REMOTE_ADDR'])."'");
-			
-			if ($exist[0] > 0)
-			{	
-				$data = $db->SelectDb("size","anonimo","WHERE ip='".addslashes($_SERVER['REMOTE_ADDR'])."'");
-				$space = $db->SelectDb("space","caracteristica","WHERE id=".addslashes($_SESSION['nivel']));
-				
-				$porcentaje = number_format((($data[0]*100)/$space[0]),2);
-				$division = $data[0] / 1048576; 
-
-				if ($porcentaje > 100) 
-					$porcentaje = 100;
-					
-				if ($division > 100) 
-				{
-					$tas = 100;
-					$division = 100;							
-				}
-				else 
-					$tas = round($division, 2, PHP_ROUND_HALF_DOWN);
-				
-				echo '
-				<div class="progress">
-					<progress id="anonimo" style="width:100%" max="100" value=""></progress>
-					<p style="margin-top:-2%">'.$tas.' mb de 100 mb</p>
+			?>
+				<div class='panel panel-default'>
+					<div class='panel-body'>
+						<form class="bs-example bs-example-bg-classes">
+							<div id="queue"></div>
+							<input id="file_upload" name="file_upload" type="file" multiple="true" >
+							<a style="position: relative;" href="javascript:$('#file_upload').uploadifive('upload')"><button type="button" class="btn btn-primary">Comenzar subida</button></a>
+						</form>
+					</div>
 				</div>
-				<script type="text/javascript"> 
-					animateprogress("#anonimo",'.$porcentaje.');
-				</script>
-				';
-			}
+			<?php
 		}
-
-		if (canUpload($db))
-			echo
-			'
-				<div style="margin-bottom: 200px">
-					<input type="file" name="file_upload" id="file_upload" />
-					<div id="file_queue"></div>
-				</div>
-			';
 		else
 		{
 			echo
@@ -86,6 +60,5 @@
 					<h2>No tienes permitido subir m&aacute;s im&aacute;genes, tienes todo tu espacio ocupado</h2>
 				</div>
 			';
-			exit;
 		}
 	?>

@@ -1,22 +1,47 @@
 <?php
-	include_once '../class.php';
+	$error = "";
+	$client_username = "";
 	
-	echo 
-	'
-		<center>
-			<div id="form_login" class="Blanco border-round" style="width: 635px; color: #006699; padding: 20px 0px 15px 0px; margin-bottom: 20px">
-					<div style="width: 80%; margin-bottom: 2%;">
-						<div style="width: 20%; text-align: left; display: inline-block;">Usuario</div>
-						<div style="width:75%; display: inline-block;"><input id="user" class="inputDefault" type="text" value="" style="width:90%;" maxlength="20" /></div>
-					</div>
-					<div style="width: 80%; margin-bottom: 2%;">
-						<div style="width: 20%; text-align: left; display: inline-block;">Contrase&ntilde;a</div>
-						<div style="width:75%; display: inline-block;"><input id="pass" class="inputDefault" type="password" value="" style="width:90%;" maxlength="20" /></div>
-					</div>
-					<button class="btn btn-red" style="width:40%;" onclick="login($(\'#user\').val(), $(\'#pass\').val())">Identificar</button>
-					<button class="btn btn-red" style="width:40%;" onclick="goMylove(\'#container\',\'/system/class/recovery.php\',\'/recovery/\')">Recuperar Cuenta</button>
-			</div>
-			<span id="login"></span>
-		</center>
-	';
+	if (isset($_POST["username"]) && isset($_POST['password'])) 
+	{
+		$client_username = strtolower(injection($db, !get_magic_quotes_gpc() ? addslashes($_POST['username']) : $_POST['username']));
+		$client_password = sha1(strtoupper($client_username).":".injection($db, !get_magic_quotes_gpc() ? addslashes($_POST['password']) : $_POST['password']));
+
+		if ($client = $db->query("SELECT client_id, client_email, client_level FROM clients WHERE client_username='$client_username' && client_password='$client_password'")->fetch_row())
+		{
+			$_SESSION['client_id'] = $client[0];
+			$_SESSION['client_username'] = $client_username;
+			$_SESSION['client_email'] = $client[1];
+			$_SESSION['client_level'] = $client[2];
+			
+			$db->query("UPDATE clients SET client_ip='".$_SERVER['REMOTE_ADDR']."', client_date_last_login='".date("Y-m-d h:i:s")."' WHERE client_id=$client[0]");
+			echo "<p class='alert alert-success'>Acaba de identificarse, sera redireccionado a la pagina principal</p>";
+			redireccionar("/index.html",2000);
+		} 
+		else
+			$error = "No introdujo bien los datos vuelva a intentarlo";
+	}
+	
+	if(!empty($error)) 
+		echo "<p class='alert alert-danger'>$error</p>";
 ?>
+<center>
+	<div class='panel panel-default'>
+		<div class='panel-body'>
+			<form method="post" class="bs-example bs-example-bg-classes">
+				<input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario" value="<?php if(isset($client_username)) echo $client_username; ?>">
+				<br />
+				<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
+				<br />
+				<div class="btn-group btn-group-justified" role="group">
+					<div class="btn-group" role="group">
+						<button type="submit" class="btn btn-default">Enviar</button>
+					</div>
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-default" onclick="window.location='recovery'">Recuperar Cuenta</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</center>

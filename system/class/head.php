@@ -1,34 +1,12 @@
-	<?php
-		include_once '../class.php';
-
-		$menu = $db->QueryDb("text,link,onclick,href,rank","menu","order by position");
-		$limit = mysql_num_rows($menu);
-		
-		?>
-		
-												<nav id="nav">
-											<ul>
-											<?php
-		
-		for($k=0;$k<$limit;$k++)
+<?php
+	if($menu = $db->query("SELECT text,href,rank FROM menu ORDER BY POSITION"))
+	{
+		while($row = mysqli_fetch_row($menu))
 		{
-			if(showrank($db->SelectDbArray($menu, $k, 4)))
+			if(showrank($row[2], $_SESSION['client_level']))
 			{
-				if(empty($db->SelectDbArray($menu, $k, 3)))
-					echo
-					'
-						<li><a href="javascript:void(0)" onclick="'.$db->SelectDbArray($menu, $k, 2).'">
-								'.$db->SelectDbArray($menu, $k, 0).'
-						</a></li>
-					';
-				else
-					echo
-					'
-						<li><a href="'.$config[0].$db->SelectDbArray($menu, $k, 3).'">
-								'.$db->SelectDbArray($menu, $k, 0).'
-						</a><li>
-					';
+				printf("<li><a href=%s>%s</a></li>", $domain.$row[1], $row[0]);
 			}
 		}
-	?>	</ul>
-										</nav>
+	}
+?>

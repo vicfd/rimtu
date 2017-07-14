@@ -1,38 +1,55 @@
 <?php
-	include_once '../class.php';
-	include_once '../language/esES.php';
-
-	if(isset($_GET['id'])) 
-	{ 
-		$exist = $db->SelectDb("count(*)","archivos","WHERE ftp='".addslashes($_GET['id'])."'");
-		
-		if($exist[0] > 0)
-		{
-			$archivo = $db->SelectDb("id,nombre,carpeta","archivos","WHERE ftp='".addslashes($_GET['id'])."'");
-			visto($archivo[0],$db);
-			recargarTiempo($archivo[0],$db);
-			?>
-			<center>
-				<div id="banner" style="margin-top:-10%;">
-					<h2><?php comprimirnombre($archivo[1]); ?></h2>
-				</div>
-				<div style="float: none; width: 80%;">
-					<div class="Blanco border-round" style="padding: 20px 0px 20px 0px; margin-top: -10%">
-						<textarea cols="58" rows="1" style="width:90%; margin-bottom: 5px;" onclick="this.select(); pageTracker._trackEvent('new-done-click','alt-forum-link-click');" readonly="readonly"><?php imprimir($config[0] . "folder/" . $archivo[2]); ?></textarea>
-						<textarea cols="58" rows="1" style="width:90%; margin-bottom: 5px;" onclick="this.select(); pageTracker._trackEvent('new-done-click','alt-forum-link-click');" readonly="readonly"><?php imprimir($config[0] . "download/" . $_GET['id']); ?></textarea>
-						<a href="../system/script/function_download.php?&id=<?php imprimir($_GET['id']); ?>">
-							<button class="btn" style="width:90%; margin-bottom: 5px;">Descargar Archivo</button>
-						</a>
-						<button class="btn" style="width:90%; margin-bottom: 5px;" onclick="FilereportFile('<?php imprimir($_GET['id']); ?>')">Reportar Archivo</button>
-						<button class="btn" style="width:90%" onclick="goMylove('#container','<?php echo $config[3] . "home.php"; ?>','<?php echo "/index.html"; ?>')"><?php imprimir($carpeta_1); ?></button>
-					</div>
-				</div>	
-			</center>
-		<?php 
-		}
-		else	
-			jsredireccionar("goMylove('#container','../system/class/home.php','index.html')");
+	if(empty($id)) 
+	{
+		redireccionar("../index.html");
+		exit;
 	}
-	else	
-		jsredireccionar("goMylove('#container','../system/class/home.php','index.html')");
+	
+	$id = injection($db, $_GET['id']);
+	$file = $db->query("SELECT file_id, file_name, file_extension, file_ftp, file_view, file_download FROM files WHERE file_ftp='$id'");
+	$row_cnt = $file->num_rows;	
+	
+	if($row_cnt == 0)
+	{
+		redireccionar("../index.html");
+		exit;
+	}
+	
+	if($row = $file->fetch_row())
+	{
+		file_view($db, $row[0]);
+		file_date_renew($db, $row[0]);
+		
+		$image = '../../uploads/' . $row[3] . '.' . $row[2];
+		
+		echo 
+		"	
+			<center>
+				<div class='panel panel-default'>
+					<div class='panel-body'>
+						<img class='img-responsive' style='width: 30%' src='./$image' border='0' alt='' />
+							<br />
+						<a href='../system/script/function_download.php?id=$row[3]'><img src='".$images_dir."descarga.png"."' border='0' align='middle' alt='' /></a>
+						<a href='/report/".$row[0]."'><img src='".$images_dir."reporte.png"."' border='0' align='middle' alt='' /></a>
+						<p>Visto: <b>$row[4]</b> Descargado <b>$row[5]</b></p>
+						
+						<div class='input-group'>
+							<span class='input-group-addon' id='basic-addon1'>Nombre</span>
+							<input type='text' class='form-control' value='".$row[1]."' aria-describedby='basic-addon1'>
+						</div>	
+						<br />
+						<div class='input-group'>
+							<span class='input-group-addon' id='basic-addon1'>Enlace web</span>
+							<input type='text' class='form-control' value='".$domain."download/".$row[3]."' aria-describedby='basic-addon1'>
+						</div>					
+						<br />
+						<div class='input-group'>
+							<span class='input-group-addon' id='basic-addon1'>Enlace imágen</span>
+							<input type='text' class='form-control' value='" . $domain . "uploads/" . $row[3] . "." . $row[2] . "' aria-describedby='basic-addon1'>
+						</div>
+					</div>
+				</div>
+			</center>
+		";
+	}
 ?>
