@@ -98,12 +98,15 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                 // Create a template for a file input
                 $data.inputTemplate = $('<input type="file">')
                 .css({
-                    'font-size' : settings.height + 'px',
+                    //'font-size' : settings.height + 'px',
                     'opacity'   : 0,
                     'position'  : 'absolute',
-                    'right'     : '-3px',
-                    'top'       : '-3px',
-                    'z-index'   : 999 
+                    //'right'     : '-3px',
+                    'top'       : '-2px',
+					'left'		: '-1px',
+                   // 'z-index'   : 999, 
+					'width'		: '100%',
+					'height': '35px'
                 });
 
                 // Create a new input
@@ -604,7 +607,7 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
 						'overflow'    : 'hidden',
 						'position'    : 'relative',
                     //  'text-align'  : 'center', 
-                    //  'width'       : settings.width
+                      'width'       : settings.width
                     });
 
                     // Insert the button above the file input

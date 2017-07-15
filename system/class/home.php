@@ -12,6 +12,7 @@
 				'buttonText'   		: 'Elegir archivos',
 				'buttonClass'		: 'btn btn-primary',
 				'queueSizeLimit' 	: 20,
+				'width'				: "100%",
 				'removeCompleted' 	: true,
 				'multi'        		: true,
 				'uploadScript'		: '/system/script/function_upload.php',
@@ -45,8 +46,10 @@
 					<div class='panel-body'>
 						<form class="bs-example bs-example-bg-classes">
 							<div id="queue"></div>
-							<input id="file_upload" name="file_upload" type="file" multiple="true" >
-							<a style="position: relative;" href="javascript:$('#file_upload').uploadifive('upload')"><button type="button" class="btn btn-primary">Comenzar subida</button></a>
+							<input id="file_upload" name="file_upload" type="file" multiple="true" />
+								<br />
+								<br />
+							<a style="position: relative;" href="javascript:$('#file_upload').uploadifive('upload')"><button type="button" class="btn btn-primary" style="width: 100%">Comenzar subida</button></a>
 						</form>
 					</div>
 				</div>
